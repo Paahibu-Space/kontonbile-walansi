@@ -10,19 +10,19 @@ sequenceDiagram
 
     Note over U,T: User Asks Question with Cultural Context
     
-    U->>WA: "How do I know if this link is safe?" (in Twi)
+    U->>WA: "How do I know if this link is safe?" (in Dagaare)
     WA->>AG: Forward message with metadata
     AG->>AG: Authenticate & rate limit
     AG->>NLP: Process incoming message
     
-    NLP->>NLP: Detect language (Twi)
+    NLP->>NLP: Detect language (Dagaare)
     NLP->>NLP: Classify intent (Safety Education)
     NLP->>AI: Request culturally appropriate response
     
     AI->>DB: Query proverbs & stories related to safety
     DB-->>AI: Return cultural content
     AI->>AI: Generate response with proverb integration
-    AI->>T: Translate response to Twi
+    AI->>T: Translate response to Dagaare
     T-->>AI: Translated response
     
     AI-->>NLP: Cultural response ready
