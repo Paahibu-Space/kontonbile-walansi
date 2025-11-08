@@ -25,7 +25,7 @@ architecture-beta
     service cache(database)[Redis Cache] in data
     service storage(disk)[Media Storage] in data
 
-    service dubawa(internet)[Fact Check API] in external
+    service googlefc(internet)[Google Fact Check API] in external
     service whatsappapi(internet)[WhatsApp API] in external
 
     whatsapp:B -- T:lb
@@ -46,5 +46,5 @@ architecture-beta
     sos:B -- T:userdb
     ai:B -- T:storage
 
-    factcheck:B -- T:dubawa
+    factcheck:B -- T:googlefc
     whatsapp:B -- T:whatsappapi

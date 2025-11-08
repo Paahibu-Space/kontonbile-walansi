@@ -4,8 +4,7 @@ sequenceDiagram
     participant TG as Telegram
     participant AG as API Gateway
     participant FC as Fact-Check Service
-    participant DA as Dubawa API
-    participant AC as Africa Check API
+    participant GFCA as Google Fact Check API
     participant C as Cache
 
     Note over U,C: Fact-Checking Workflow
@@ -18,19 +17,14 @@ sequenceDiagram
     alt Cache Hit
         C-->>FC: Return cached result
     else Cache Miss
-        FC->>DA: Query Dubawa API
-        FC->>AC: Query Africa Check API
+        FC->>FC: Extract claim text from message
+        FC->>GFCA: Query Google Fact Check API
+        GFCA-->>FC: Verification results with ratings
         
-        par Parallel API calls
-            DA-->>FC: Verification result
-        and
-            AC-->>FC: Cross-verification
-        end
-        
-        FC->>FC: Aggregate results
+        FC->>FC: Process and format results
         FC->>C: Store in cache
     end
     
-    FC-->>AG: Verification status (False/Misleading)
+    FC-->>AG: Verification status (False/Misleading/True)
     AG-->>TG: Formatted fact-check card
     TG-->>U: "❌ This claim is FALSE. Here's why..."
